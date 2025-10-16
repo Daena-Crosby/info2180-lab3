@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", function() {
   const board = document.getElementById("board");
   const squares = board.getElementsByTagName("div");
   const statusDiv = document.getElementById("status");
+  const newGameBtn = document.querySelector(".btn");
 
   // Step 1: Style each square
   for (let i = 0; i < squares.length; i++) {
@@ -13,7 +14,7 @@ document.addEventListener("DOMContentLoaded", function() {
   let gameState = Array(9).fill(null);
   let gameOver = false;
 
-  // Step 3: Winning combinations (by index positions)
+  // Step 3: Winning combinations
   const winningCombos = [
     [0, 1, 2],
     [3, 4, 5],
@@ -25,15 +26,10 @@ document.addEventListener("DOMContentLoaded", function() {
     [2, 4, 6],
   ];
 
-  // Step 4: Function to check winner
+  // Step 4: Check winner
   function checkWinner() {
     for (const [a, b, c] of winningCombos) {
-      if (
-        gameState[a] &&
-        gameState[a] === gameState[b] &&
-        gameState[a] === gameState[c]
-      ) {
-        // Winner found!
+      if (gameState[a] && gameState[a] === gameState[b] && gameState[a] === gameState[c]) {
         const winner = gameState[a];
         statusDiv.textContent = `Congratulations! ${winner} is the Winner!`;
         statusDiv.classList.add("you-won");
@@ -44,9 +40,8 @@ document.addEventListener("DOMContentLoaded", function() {
     return false;
   }
 
-  // Step 5: Add interactivity
+  // Step 5: Handle clicks on squares
   for (let i = 0; i < squares.length; i++) {
-    // Click event
     squares[i].addEventListener("click", function() {
       if (gameOver || gameState[i] !== null) return;
 
@@ -54,13 +49,11 @@ document.addEventListener("DOMContentLoaded", function() {
       squares[i].textContent = currentPlayer;
       squares[i].classList.add(currentPlayer);
 
-      // Check for winner after every move
       if (!checkWinner()) {
         currentPlayer = currentPlayer === "X" ? "O" : "X";
       }
     });
 
-    // Hover effects
     squares[i].addEventListener("mouseover", function() {
       if (!gameOver && !gameState[i]) squares[i].classList.add("hover");
     });
@@ -69,4 +62,22 @@ document.addEventListener("DOMContentLoaded", function() {
       squares[i].classList.remove("hover");
     });
   }
+
+  // Step 6: Reset button functionality
+  newGameBtn.addEventListener("click", function() {
+    // Reset all variables
+    currentPlayer = "X";
+    gameState = Array(9).fill(null);
+    gameOver = false;
+
+    // Clear the board
+    for (let i = 0; i < squares.length; i++) {
+      squares[i].textContent = "";
+      squares[i].classList.remove("X", "O", "hover");
+    }
+
+    // Reset the status message
+    statusDiv.textContent = "Move your mouse over a square and click to play an X or an O.";
+    statusDiv.classList.remove("you-won");
+  });
 });
