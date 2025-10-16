@@ -26,10 +26,14 @@ document.addEventListener("DOMContentLoaded", function() {
     [2, 4, 6],
   ];
 
-  // Step 4: Check winner
+  // Step 4: Function to check for a winner
   function checkWinner() {
     for (const [a, b, c] of winningCombos) {
-      if (gameState[a] && gameState[a] === gameState[b] && gameState[a] === gameState[c]) {
+      if (
+        gameState[a] &&
+        gameState[a] === gameState[b] &&
+        gameState[a] === gameState[c]
+      ) {
         const winner = gameState[a];
         statusDiv.textContent = `Congratulations! ${winner} is the Winner!`;
         statusDiv.classList.add("you-won");
@@ -40,9 +44,10 @@ document.addEventListener("DOMContentLoaded", function() {
     return false;
   }
 
-  // Step 5: Handle clicks on squares
+  // Step 5: Handle square clicks
   for (let i = 0; i < squares.length; i++) {
     squares[i].addEventListener("click", function() {
+      // Prevent overwriting and stop play if game over
       if (gameOver || gameState[i] !== null) return;
 
       gameState[i] = currentPlayer;
@@ -54,8 +59,11 @@ document.addEventListener("DOMContentLoaded", function() {
       }
     });
 
+    // Hover effects
     squares[i].addEventListener("mouseover", function() {
-      if (!gameOver && !gameState[i]) squares[i].classList.add("hover");
+      if (!gameOver && !gameState[i]) {
+        squares[i].classList.add("hover");
+      }
     });
 
     squares[i].addEventListener("mouseout", function() {
@@ -63,21 +71,22 @@ document.addEventListener("DOMContentLoaded", function() {
     });
   }
 
-  // Step 6: Reset button functionality
+  // Step 6: Reset the game on "New Game" click
   newGameBtn.addEventListener("click", function() {
-    // Reset all variables
+    // Reset state
     currentPlayer = "X";
     gameState = Array(9).fill(null);
     gameOver = false;
 
-    // Clear the board
+    // Clear board
     for (let i = 0; i < squares.length; i++) {
       squares[i].textContent = "";
       squares[i].classList.remove("X", "O", "hover");
     }
 
-    // Reset the status message
-    statusDiv.textContent = "Move your mouse over a square and click to play an X or an O.";
+    // Reset status text and style
+    statusDiv.textContent =
+      "Move your mouse over a square and click to play an X or an O.";
     statusDiv.classList.remove("you-won");
   });
 });
