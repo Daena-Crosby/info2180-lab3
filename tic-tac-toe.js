@@ -4,17 +4,17 @@ document.addEventListener("DOMContentLoaded", function() {
   const statusDiv = document.getElementById("status");
   const newGameBtn = document.querySelector(".btn");
 
-  // Step 1: Style each square
+  // Exercise 1: Style each square
   for (let i = 0; i < squares.length; i++) {
     squares[i].classList.add("square");
   }
 
-  // Step 2: Track game state and turns
+  // Exercise 2: Track game state and turns
   let currentPlayer = "X";
   let gameState = Array(9).fill(null);
   let gameOver = false;
 
-  // Step 3: Winning combinations
+  // Exercise 3: Winning combinations
   const winningCombos = [
     [0, 1, 2],
     [3, 4, 5],
@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", function() {
     [2, 4, 6],
   ];
 
-  // Step 4: Function to check for a winner
+  // Exercise 4: Function to check for a winner
   function checkWinner() {
     for (const [a, b, c] of winningCombos) {
       if (
@@ -44,7 +44,7 @@ document.addEventListener("DOMContentLoaded", function() {
     return false;
   }
 
-  // Step 5: Handle square clicks
+  // Exercise 5: Handle square clicks
   for (let i = 0; i < squares.length; i++) {
     squares[i].addEventListener("click", function() {
       // Prevent overwriting and stop play if game over
@@ -71,7 +71,7 @@ document.addEventListener("DOMContentLoaded", function() {
     });
   }
 
-  // Step 6: Reset the game on "New Game" click
+  // Exercise 6: Reset the game on "New Game" click
   newGameBtn.addEventListener("click", function() {
     // Reset state
     currentPlayer = "X";
